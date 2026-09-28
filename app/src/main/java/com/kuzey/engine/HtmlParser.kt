@@ -18,7 +18,7 @@ object HtmlParser {
                 if (stack.size > 1) stack.removeAt(stack.lastIndex)
             } else if (!s.startsWith("<!") && !s.startsWith("<?")) {
                 val inside = s.removePrefix("<").removeSuffix(">").trim()
-                val name = inside.substringBefore(Regex("\\s")).lowercase().trimEnd('/')
+                val name = inside.split(Regex("\\s+"), limit = 2)[0].lowercase().trimEnd('/')
                 val attrs = attr.findAll(inside).associate {
                     val v = it.groups[2]?.value ?: it.groups[3]?.value ?: it.groups[4]?.value ?: ""
                     it.groups[1]!!.value.lowercase() to v
